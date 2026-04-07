@@ -26,7 +26,6 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:'Noto S
 
 .toast{position:fixed;top:20px;left:50%;transform:translateX(-50%) translateY(-70px);background:var(--text);color:#fff;font-size:13px;padding:10px 20px;border-radius:20px;z-index:9999;transition:transform .3s;white-space:nowrap;pointer-events:none}
 .toast.show{transform:translateX(-50%) translateY(0)}
-
 .loading-overlay{position:fixed;inset:0;background:var(--bg);display:flex;align-items:center;justify-content:center;flex-direction:column;gap:14px;z-index:100}
 .ldots{display:flex;gap:8px}
 .ldot{width:8px;height:8px;border-radius:50%;background:var(--accent);animation:ldot 1.2s infinite}
@@ -44,7 +43,8 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:'Noto S
 .page{display:none;padding:18px 16px 0;animation:fadeUp .2s ease}
 .page.active{display:block}
 @keyframes fadeUp{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
-.page-title{font-size:20px;font-weight:700;letter-spacing:-0.5px;margin-bottom:16px}
+.page-title{font-size:20px;font-weight:700;letter-spacing:-0.5px;margin-bottom:4px}
+.page-subtitle{font-size:12px;color:var(--text3);margin-bottom:16px}
 
 /* ── NICK SCREEN ── */
 .nick-screen{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;padding:30px 20px;overflow-y:auto}
@@ -73,8 +73,9 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:'Noto S
 .go-btn{position:absolute;right:8px;top:50%;transform:translateY(-50%);background:var(--accent);border:none;border-radius:10px;width:36px;height:36px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .15s}
 .go-btn:hover{background:#236030}
 .go-btn svg{width:16px;height:16px}
+.nick-note{font-size:11px;color:var(--text3);text-align:center;line-height:1.6;padding:0 10px}
 
-/* ── TIMER 페이지 ── */
+/* ── TIMER ── */
 .timer-header-card{background:var(--bg2);border-radius:18px;border:1px solid var(--border);padding:18px 18px 14px;margin-bottom:12px;box-shadow:0 2px 10px rgba(0,0,0,0.04)}
 .timer-header-top{display:flex;align-items:center;gap:12px;margin-bottom:14px}
 .timer-av{width:48px;height:48px;border-radius:50%;overflow:hidden;background:var(--bg3);border:2px solid var(--bg4);flex-shrink:0}
@@ -83,16 +84,12 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:'Noto S
 .timer-nick{font-size:14px;font-weight:500;color:var(--text)}
 .timer-total-label{font-size:11px;color:var(--text3);margin-top:2px}
 .timer-total-val{font-size:13px;font-weight:500;color:var(--accent);font-family:'DM Mono',monospace}
-
-/* 과목별 타이머 추가 */
-.add-subject-row{display:flex;gap:8px;margin-bottom:12px}
+.add-subject-row{display:flex;gap:8px}
 .add-subject-row input{flex:1;background:var(--bg3);border:1px solid var(--border);border-radius:10px;padding:10px 14px;font-size:14px;color:var(--text);font-family:'Noto Sans KR',sans-serif;outline:none;transition:border .2s}
 .add-subject-row input:focus{border-color:var(--accent);background:var(--bg2)}
 .add-subject-row input::placeholder{color:var(--text3)}
-.add-subject-row button{background:var(--accent);border:none;border-radius:10px;padding:0 16px;font-size:20px;color:#fff;cursor:pointer;transition:background .15s;white-space:nowrap}
+.add-subject-row button{background:var(--accent);border:none;border-radius:10px;padding:0 16px;font-size:15px;color:#fff;cursor:pointer;transition:background .15s;white-space:nowrap;font-family:'Noto Sans KR',sans-serif;font-weight:500}
 .add-subject-row button:hover{background:#236030}
-
-/* 과목 타이머 카드 */
 .subject-timers{display:flex;flex-direction:column;gap:8px}
 .subj-timer-card{background:var(--bg2);border:1px solid var(--border);border-radius:14px;padding:12px 14px;display:flex;align-items:center;gap:12px;box-shadow:0 1px 5px rgba(0,0,0,0.03);transition:all .2s}
 .subj-timer-card.active-card{border-color:var(--accent);background:var(--accent-lt);box-shadow:0 2px 12px rgba(45,122,58,0.12)}
@@ -102,18 +99,37 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:'Noto S
 .subj-timer-card.active-card .subj-time-display{color:var(--accent)}
 .subj-timer-btns{display:flex;gap:6px;align-items:center;flex-shrink:0}
 .subj-btn{padding:7px 14px;border-radius:9px;border:none;font-size:13px;font-family:'Noto Sans KR',sans-serif;font-weight:500;cursor:pointer;transition:all .15s}
-.subj-btn-start{background:var(--accent);color:#fff}
-.subj-btn-start:hover{background:#236030}
-.subj-btn-pause{background:var(--bg3);color:var(--text2);border:1px solid var(--border2)}
-.subj-btn-pause:hover{background:var(--bg4)}
+.subj-btn-start{background:var(--accent);color:#fff}.subj-btn-start:hover{background:#236030}
+.subj-btn-pause{background:var(--bg3);color:var(--text2);border:1px solid var(--border2)}.subj-btn-pause:hover{background:var(--bg4)}
 .subj-btn-del{background:none;border:none;cursor:pointer;font-size:16px;color:var(--text3);padding:4px;transition:color .15s}
 .subj-btn-del:hover{color:var(--red)}
-
 .save-all-btn{width:100%;padding:13px;border-radius:14px;border:none;background:var(--accent);color:#fff;font-size:15px;font-family:'Noto Sans KR',sans-serif;font-weight:700;cursor:pointer;margin-top:12px;transition:background .15s}
 .save-all-btn:hover{background:#236030}
 .save-all-btn:disabled{background:var(--bg4);color:var(--text3);cursor:not-allowed}
-
 .empty-subjects{text-align:center;padding:24px;font-size:13px;color:var(--text3);background:var(--bg2);border-radius:14px;border:1px solid var(--border)}
+
+/* ── 접속자 현황 카드 ── */
+.online-card{background:var(--bg2);border-radius:16px;border:1px solid var(--border);padding:16px;margin-bottom:14px;box-shadow:0 1px 6px rgba(0,0,0,0.03)}
+.online-card-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px}
+.online-card-title{font-size:14px;font-weight:700;color:var(--text);display:flex;align-items:center;gap:6px}
+.live-badge{font-size:10px;padding:2px 8px;border-radius:10px;background:var(--accent-lt);color:var(--accent);font-weight:600;display:flex;align-items:center;gap:4px}
+.live-dot{width:6px;height:6px;border-radius:50%;background:var(--accent);animation:pulse 1.5s infinite;flex-shrink:0}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.35}}
+.online-count-badge{font-size:12px;color:var(--text3)}
+.online-members{display:flex;flex-direction:column;gap:10px}
+.online-member-row{display:flex;align-items:center;gap:10px}
+.online-member-av{width:40px;height:40px;border-radius:50%;overflow:hidden;background:var(--bg3);flex-shrink:0;position:relative;border:2px solid var(--bg4)}
+.online-member-av img{width:100%;height:100%}
+.online-av-dot{position:absolute;bottom:1px;right:1px;width:10px;height:10px;border-radius:50%;border:2px solid var(--bg2)}
+.online-av-dot.studying{background:var(--accent);animation:pulse 1.5s infinite}
+.online-av-dot.idle{background:var(--text3)}
+.online-member-info{flex:1;min-width:0}
+.online-member-name{font-size:14px;font-weight:500;color:var(--text);display:flex;align-items:center;gap:6px}
+.me-tag{font-size:10px;padding:1px 6px;border-radius:8px;background:rgba(45,122,58,0.12);color:var(--accent);flex-shrink:0}
+.online-member-status{font-size:12px;color:var(--text3);margin-top:1px}
+.online-member-status.studying{color:var(--accent);font-weight:500}
+.online-member-time{font-size:12px;font-family:'DM Mono',monospace;color:var(--text2);flex-shrink:0}
+.online-empty{font-size:13px;color:var(--text3);text-align:center;padding:12px 0}
 
 /* ── PLANNER ── */
 .cal-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
@@ -123,7 +139,7 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:'Noto S
 .cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:2px;margin-bottom:14px}
 .cal-dow{font-size:11px;color:var(--text3);text-align:center;padding:4px 0;font-weight:500}
 .cal-dow:first-child{color:var(--red)}.cal-dow:last-child{color:var(--blue)}
-.cal-day{aspect-ratio:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;padding:4px 2px 2px;border-radius:10px;cursor:pointer;position:relative;transition:background .15s;border:1.5px solid transparent}
+.cal-day{aspect-ratio:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;padding:4px 2px 2px;border-radius:10px;cursor:pointer;transition:background .15s;border:1.5px solid transparent}
 .cal-day:hover{background:var(--bg3)}
 .cal-day.today{background:var(--accent-lt);border-color:var(--accent-mid)}
 .cal-day.selected{background:var(--accent);border-color:var(--accent)}
@@ -156,35 +172,26 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:'Noto S
 .empty-msg{font-size:13px;color:var(--text3);padding:12px 0;text-align:center}
 
 /* ── RANK ── */
-
-/* 어제 올림픽 단상 */
 .podium-section{background:var(--bg2);border-radius:18px;border:1px solid var(--border);padding:16px 12px 20px;margin-bottom:14px;box-shadow:0 2px 10px rgba(0,0,0,0.04)}
 .podium-label{font-size:12px;font-weight:500;color:var(--text3);text-align:center;margin-bottom:16px;letter-spacing:0.3px}
-.podium-avatars{display:flex;justify-content:center;align-items:flex-end;gap:6px;margin-bottom:0}
-
-/* 단상 카드 */
+.podium-avatars{display:flex;justify-content:center;align-items:flex-end;gap:6px}
 .podium-item{display:flex;flex-direction:column;align-items:center;gap:6px}
-.podium-item.p1{order:2}
-.podium-item.p2{order:1}
-.podium-item.p3{order:3}
+.podium-item.p1{order:2}.podium-item.p2{order:1}.podium-item.p3{order:3}
 .podium-av-wrap{position:relative}
-.podium-av{border-radius:50%;overflow:hidden;background:var(--bg3);border:3px solid var(--bg4)}
-.podium-item.p1 .podium-av{width:64px;height:64px;border-color:gold}
-.podium-item.p2 .podium-av{width:52px;height:52px;border-color:#c0c0c0}
-.podium-item.p3 .podium-av{width:48px;height:48px;border-color:#cd7f32}
+.podium-av{border-radius:50%;overflow:hidden;background:var(--bg3)}
+.podium-item.p1 .podium-av{width:64px;height:64px;border:3px solid gold}
+.podium-item.p2 .podium-av{width:52px;height:52px;border:3px solid #c0c0c0}
+.podium-item.p3 .podium-av{width:48px;height:48px;border:3px solid #cd7f32}
 .podium-av img{width:100%;height:100%}
 .podium-crown{position:absolute;top:-14px;left:50%;transform:translateX(-50%);font-size:18px;line-height:1}
 .podium-name{font-size:12px;font-weight:600;color:var(--text);text-align:center;max-width:80px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .podium-time{font-size:11px;color:var(--text2);font-family:'DM Mono',monospace;text-align:center}
-/* 단상 블록 */
 .podium-block-wrap{display:flex;justify-content:center;align-items:flex-end;gap:6px;margin-top:8px}
 .podium-block{border-radius:10px 10px 0 0;display:flex;align-items:center;justify-content:center}
-.podium-block.b1{width:100px;height:60px;background:linear-gradient(180deg,#ffd700 0%,#f0b800 100%)}
-.podium-block.b2{width:86px;height:44px;background:linear-gradient(180deg,#d8d8d8 0%,#b8b8b8 100%)}
-.podium-block.b3{width:80px;height:32px;background:linear-gradient(180deg,#e8a96a 0%,#cd7f32 100%)}
+.podium-block.b1{width:100px;height:60px;background:linear-gradient(180deg,#ffd700,#f0b800)}
+.podium-block.b2{width:86px;height:44px;background:linear-gradient(180deg,#d8d8d8,#b8b8b8)}
+.podium-block.b3{width:80px;height:32px;background:linear-gradient(180deg,#e8a96a,#cd7f32)}
 .podium-block-num{font-size:18px;font-weight:700;color:rgba(0,0,0,0.25)}
-
-/* 랭킹 목록 */
 .rank-section-title{font-size:13px;font-weight:500;color:var(--text2);margin-bottom:10px}
 .rank-top3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:12px}
 .rank-top-card{background:var(--bg2);border:1px solid var(--border);border-radius:16px;padding:14px 8px;text-align:center;box-shadow:0 1px 6px rgba(0,0,0,0.04)}
@@ -196,25 +203,23 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:'Noto S
 .rank-top-name{font-size:12px;font-weight:500;color:var(--text);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .rank-top-time{font-size:11px;color:var(--text2);font-family:'DM Mono',monospace;margin-top:2px}
 .rank-list-wrap{background:var(--bg2);border-radius:16px;border:1px solid var(--border);overflow:hidden;box-shadow:0 1px 6px rgba(0,0,0,0.03)}
-.rank-row{display:flex;align-items:center;gap:10px;padding:10px 14px;border-bottom:1px solid var(--border);transition:background .15s}
+.rank-row{display:flex;align-items:center;gap:10px;padding:10px 14px;border-bottom:1px solid var(--border)}
 .rank-row:last-child{border-bottom:none}
 .rank-row.me{background:var(--accent-lt)}
 .rank-pos{width:20px;font-size:13px;font-weight:500;color:var(--text3);text-align:center;flex-shrink:0}
 .rank-av{width:36px;height:36px;border-radius:50%;overflow:hidden;background:var(--bg3);flex-shrink:0;position:relative}
 .rank-av img{width:100%;height:100%}
 .rank-live-dot{position:absolute;bottom:0;right:0;width:10px;height:10px;border-radius:50%;background:var(--accent);border:2px solid var(--bg2);animation:pulse 1.5s infinite}
-@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
 .rank-info-col{flex:1;min-width:0}
 .rank-name-row{display:flex;align-items:center;gap:6px}
 .rank-nm{font-size:14px;color:var(--text);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.me-tag{font-size:10px;padding:1px 6px;border-radius:8px;background:rgba(45,122,58,0.12);color:var(--accent);flex-shrink:0}
 .rank-bar-bg{height:3px;background:var(--bg3);border-radius:3px;margin-top:4px}
 .rank-bar-fg{height:3px;border-radius:3px;background:var(--bg4);transition:width .5s ease}
 .rank-row.me .rank-bar-fg{background:var(--accent)}
 .rank-hr-time{font-size:12px;color:var(--text2);font-family:'DM Mono',monospace;white-space:nowrap;flex-shrink:0}
 .rank-empty{padding:36px;text-align:center;font-size:13px;color:var(--text3);line-height:2.2}
 .rank-footer{font-size:11px;color:var(--text3);text-align:center;margin-top:8px;display:flex;align-items:center;justify-content:center;gap:5px}
-.online-dot{width:6px;height:6px;border-radius:50%;background:var(--accent);display:inline-block;animation:pulse 2s infinite}
+.online-dot-sm{width:6px;height:6px;border-radius:50%;background:var(--accent);display:inline-block;animation:pulse 2s infinite}
 
 /* ── STAT ── */
 .stat-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px}
@@ -314,6 +319,7 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:'Noto S
         <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
       </button>
     </div>
+    <div class="nick-note">닉네임은 한 번 설정하면 변경되지 않아요.<br>캐릭터는 나중에 언제든 바꿀 수 있어요.</div>
   </div>
 
   <div id="main-app" style="display:none">
@@ -321,6 +327,7 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:'Noto S
     <!-- TIMER -->
     <div id="page-timer" class="page active">
       <div class="page-title">타이머</div>
+      <div class="page-subtitle" id="timer-date-label"></div>
       <div class="timer-header-card">
         <div class="timer-header-top">
           <div class="timer-av"><img id="timer-av-img" src="" alt=""></div>
@@ -336,9 +343,7 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:'Noto S
         </div>
       </div>
       <div id="subject-timers-list" class="subject-timers"></div>
-      <div id="empty-subjects" class="empty-subjects" style="display:none">
-        위에서 과목을 추가하고 공부를 시작하세요 📚
-      </div>
+      <div id="empty-subjects" class="empty-subjects">위에서 과목을 추가하고 공부를 시작하세요 📚</div>
       <button class="save-all-btn" id="save-all-btn" onclick="saveAllTimers()" disabled>기록 저장하기</button>
     </div>
 
@@ -370,6 +375,20 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:'Noto S
     <div id="page-rank" class="page">
       <div class="page-title">랭킹</div>
 
+      <!-- 실시간 접속자 -->
+      <div class="online-card">
+        <div class="online-card-header">
+          <div class="online-card-title">
+            지금 접속 중
+            <span class="live-badge"><span class="live-dot"></span>LIVE</span>
+          </div>
+          <span class="online-count-badge" id="online-count-badge">0명</span>
+        </div>
+        <div class="online-members" id="online-members-list">
+          <div class="online-empty">접속 중인 멤버가 없어요</div>
+        </div>
+      </div>
+
       <!-- 어제 단상 -->
       <div class="podium-section" id="podium-section" style="display:none">
         <div class="podium-label">🏅 어제의 결과</div>
@@ -385,7 +404,7 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:'Noto S
       <div class="rank-section-title">오늘 실시간 랭킹</div>
       <div id="rank-top3" class="rank-top3" style="display:none"></div>
       <div id="rank-list-wrap" class="rank-list-wrap"><div class="rank-empty">데이터 불러오는 중...</div></div>
-      <div class="rank-footer"><span class="online-dot"></span><span id="online-count">연결 중...</span></div>
+      <div class="rank-footer"><span class="online-dot-sm"></span><span id="online-count-footer">연결 중...</span></div>
     </div>
 
     <!-- STAT -->
@@ -450,6 +469,10 @@ function yesterdayStr(){const d=new Date();d.setDate(d.getDate()-1);return d.toI
 function fmtSec(s){const h=Math.floor(s/3600),m=Math.floor((s%3600)/60),sc=s%60;return[h,m,sc].map(x=>String(x).padStart(2,'0')).join(':')}
 function fmtMin(s){if(!s||s<60)return s+'초';const h=Math.floor(s/3600),m=Math.floor((s%3600)/60);return h>0?h+'시간 '+m+'분':m+'분'}
 function showToast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2500)}
+function updateDateLabel(){
+  const d=new Date();const days=['일','월','화','수','목','금','토'];
+  document.getElementById('timer-date-label').textContent=`${d.getMonth()+1}월 ${d.getDate()}일 (${days[d.getDay()]})`;
+}
 
 /* ── 상태 ── */
 let NICK='', STYLE_IDX=0, SEED='abc123';
@@ -460,64 +483,33 @@ let allTasks={};
 let calYear=new Date().getFullYear(), calMonth=new Date().getMonth();
 let selectedDate=todayStr();
 let liveInterval=null;
-
-/* 과목 타이머 상태: [{id, name, elapsed, running, start, tick}] */
 let subjects=[];
-let activeSubjId=null; // 현재 실행 중인 과목 id
+let activeSubjId=null;
 
 /* ── 로컬스토리지 ── */
 function lsSave(){
   try{
-    localStorage.setItem('hw5_nick',NICK);
-    localStorage.setItem('hw5_style',String(STYLE_IDX));
-    localStorage.setItem('hw5_seed',SEED);
-    // 과목 타이머 저장 (today 기반)
-    const saved=subjects.map(s=>({id:s.id,name:s.name,elapsed:s.elapsed+(s.running?Math.floor((Date.now()-s.start)/1000):0),date:todayStr()}));
-    localStorage.setItem('hw5_subjects',JSON.stringify(saved));
-    localStorage.setItem('hw5_subjects_date',todayStr());
+    localStorage.setItem('hw6_nick',NICK);
+    localStorage.setItem('hw6_style',String(STYLE_IDX));
+    localStorage.setItem('hw6_seed',SEED);
+    const saved=subjects.map(s=>({id:s.id,name:s.name,elapsed:getCurrentSec(s),date:todayStr()}));
+    localStorage.setItem('hw6_subjects',JSON.stringify(saved));
+    localStorage.setItem('hw6_subjects_date',todayStr());
   }catch(e){}
 }
 function lsLoad(){
-  NICK=localStorage.getItem('hw5_nick')||'';
-  STYLE_IDX=parseInt(localStorage.getItem('hw5_style')||'0');
-  SEED=localStorage.getItem('hw5_seed')||randSeed();
-  const savedDate=localStorage.getItem('hw5_subjects_date');
+  NICK=localStorage.getItem('hw6_nick')||'';
+  STYLE_IDX=parseInt(localStorage.getItem('hw6_style')||'0');
+  SEED=localStorage.getItem('hw6_seed')||randSeed();
+  const savedDate=localStorage.getItem('hw6_subjects_date');
   if(savedDate===todayStr()){
-    try{
-      const raw=JSON.parse(localStorage.getItem('hw5_subjects')||'[]');
-      subjects=raw.map(s=>({...s,running:false,start:null,tick:null}));
-    }catch(e){subjects=[];}
-  } else {
-    subjects=[];
-    localStorage.removeItem('hw5_subjects');
-  }
+    try{const raw=JSON.parse(localStorage.getItem('hw6_subjects')||'[]');subjects=raw.map(s=>({...s,running:false,start:null,tick:null}));}catch(e){subjects=[];}
+  } else {subjects=[];localStorage.removeItem('hw6_subjects');}
 }
 
-/* ── 00시 자동 초기화 감지 ── */
-function setupMidnightReset(){
-  function msUntilMidnight(){
-    const now=new Date();
-    const midnight=new Date(now);
-    midnight.setHours(24,0,0,0);
-    return midnight-now;
-  }
-  function doReset(){
-    // 모든 타이머 정지
-    subjects.forEach(s=>{
-      if(s.running){clearInterval(s.tick);s.running=false;s.start=null;}
-    });
-    subjects=[];
-    activeSubjId=null;
-    if(liveInterval){clearInterval(liveInterval);liveInterval=null;}
-    lsSave();
-    renderSubjectTimers();
-    updateTimerTotalVal();
-    showToast('자정이 됐어요! 새로운 하루를 시작해요 🌅');
-    // 다음 자정 예약
-    setTimeout(()=>{doReset();setupMidnightReset();}, msUntilMidnight()+1000);
-  }
-  setTimeout(doReset, msUntilMidnight()+500);
-}
+/* ── 닉네임은 한 번만 설정 ── */
+// 닉네임이 이미 있으면 변경 불가. 캐릭터만 변경 가능.
+// nick-chip 클릭 → 캐릭터 변경 모달만 열림
 
 function myAvatarUrl(){return dicebearUrl(STYLES[STYLE_IDX].id,SEED)}
 
@@ -526,9 +518,7 @@ function renderStyleScroll(containerId,curIdx,curSeed,onSelect){
   const el=document.getElementById(containerId);
   el.innerHTML=STYLES.map((s,i)=>`
     <div class="${containerId==='nick-style-scroll'?'style-btn':'modal-style-btn'} ${i===curIdx?'selected':''}" data-idx="${i}">
-      <div class="${containerId==='nick-style-scroll'?'style-av':'modal-style-av'}">
-        <img src="${dicebearUrl(s.id,curSeed)}" alt="${s.name}" loading="lazy">
-      </div>
+      <div class="${containerId==='nick-style-scroll'?'style-av':'modal-style-av'}"><img src="${dicebearUrl(s.id,curSeed)}" alt="${s.name}" loading="lazy"></div>
       <span class="${containerId==='nick-style-scroll'?'style-name':'modal-style-name'}">${s.name}</span>
     </div>`).join('');
   el.querySelectorAll('[data-idx]').forEach(btn=>{
@@ -550,18 +540,24 @@ window.randomModalSeed=function(){modalSeed=randSeed();updateModalPreview();}
 
 document.getElementById('modal-cancel-btn').addEventListener('click',()=>{document.getElementById('char-modal').classList.remove('open');});
 document.getElementById('char-modal').addEventListener('click',(e)=>{if(e.target===document.getElementById('char-modal'))document.getElementById('char-modal').classList.remove('open');});
+
+/* nick-chip 클릭: 닉네임 변경 없이 캐릭터 변경 모달만 */
 document.getElementById('nick-chip').addEventListener('click',()=>{
-  modalStyleIdx=STYLE_IDX;modalSeed=SEED;
+  modalStyleIdx=STYLE_IDX; modalSeed=SEED;
   updateModalPreview();
   document.getElementById('char-modal').classList.add('open');
 });
+
 window.saveCharChange=function(){
-  STYLE_IDX=modalStyleIdx;SEED=modalSeed;lsSave();
+  STYLE_IDX=modalStyleIdx; SEED=modalSeed; lsSave();
   document.getElementById('char-modal').classList.remove('open');
   updateAllAvatars();
-  if(presenceRef)set(presenceRef,{nick:NICK,style:STYLE_IDX,seed:SEED,ts:Date.now()});
+  // Firebase presence & rank 캐릭터 업데이트
+  if(presenceRef) set(presenceRef,{nick:NICK,style:STYLE_IDX,seed:SEED,studying:false,ts:Date.now()});
   const today=todayStr();
   onValue(ref(db,`rank/${today}/${NICK}`),snap=>{if(snap.val())update(ref(db,`rank/${today}/${NICK}`),{style:STYLE_IDX,seed:SEED});},{onlyOnce:true});
+  // members DB에도 캐릭터 동기화
+  set(ref(db,`members/${NICK}`),{nick:NICK,style:STYLE_IDX,seed:SEED,updatedAt:Date.now()});
   showToast('캐릭터가 변경됐어요!');
 };
 
@@ -573,18 +569,38 @@ function updateAllAvatars(){
   document.getElementById('timer-nick-label').textContent=NICK;
 }
 
+/* ── 00시 초기화 ── */
+function setupMidnightReset(){
+  function msUntilMidnight(){const now=new Date();const m=new Date(now);m.setHours(24,0,0,0);return m-now;}
+  function doReset(){
+    subjects.forEach(s=>{if(s.running){clearInterval(s.tick);s.running=false;s.start=null;}});
+    subjects=[];activeSubjId=null;
+    if(liveInterval){clearInterval(liveInterval);liveInterval=null;}
+    lsSave();renderSubjectTimers();updateTimerTotalVal();
+    showToast('자정이 됐어요! 새로운 하루를 시작해요 🌅');
+    updateDateLabel();
+    startLivePush();
+    setTimeout(()=>{doReset();},msUntilMidnight()+1000);
+  }
+  setTimeout(doReset,msUntilMidnight()+500);
+}
+
 /* ── 초기화 ── */
 lsLoad();
-nickStyleIdx=STYLE_IDX;nickSeed=SEED;
+nickStyleIdx=STYLE_IDX; nickSeed=SEED;
 updateNickPreview();
 document.getElementById('loading').style.display='none';
+
 if(NICK){showMain();}
 else{document.getElementById('nick-screen').style.display='flex';}
 
 window.startApp=function(){
   const n=document.getElementById('nick-input').value.trim();
   if(!n){showToast('닉네임을 입력해 주세요');return;}
-  NICK=n;STYLE_IDX=nickStyleIdx;SEED=nickSeed;lsSave();showMain();
+  NICK=n; STYLE_IDX=nickStyleIdx; SEED=nickSeed; lsSave();
+  // Firebase members에 닉네임+캐릭터 저장 (영구)
+  set(ref(db,`members/${NICK}`),{nick:NICK,style:STYLE_IDX,seed:SEED,createdAt:Date.now()});
+  showMain();
 };
 
 function showMain(){
@@ -593,28 +609,82 @@ function showMain(){
   document.getElementById('main-nav').style.display='flex';
   document.getElementById('nick-chip').style.display='flex';
   updateAllAvatars();
+  updateDateLabel();
   setupPresence();
   renderSubjectTimers();
   updateTimerTotalVal();
+  listenOnlineMembers();
   listenRank();
   listenYesterdayPodium();
-  listenOnline();
   listenTasks();
   initCalendar();
   setupMidnightReset();
   startLivePush();
 }
 
-/* ── Presence ── */
+/* ── Presence (접속 상태) ── */
 function setupPresence(){
   presenceRef=ref(db,`presence/${NICK}`);
-  set(presenceRef,{nick:NICK,style:STYLE_IDX,seed:SEED,ts:Date.now()});
+  set(presenceRef,{nick:NICK,style:STYLE_IDX,seed:SEED,studying:false,ts:Date.now()});
   onDisconnect(presenceRef).remove();
 }
-function listenOnline(){
-  onValue(ref(db,'presence'),snap=>{
-    const count=Object.keys(snap.val()||{}).length;
-    document.getElementById('online-count').textContent=count+'명 접속 중';
+
+function updatePresenceStudying(isStudying){
+  if(!presenceRef)return;
+  update(presenceRef,{studying:isStudying,ts:Date.now()});
+}
+
+/* ── 실시간 접속자 현황 ── */
+function listenOnlineMembers(){
+  // members: 전체 등록된 멤버 (영구)
+  // presence: 현재 접속 중인 멤버 (disconnect시 삭제)
+  // rank/today: 오늘 공부시간
+
+  onValue(ref(db,'presence'),presenceSnap=>{
+    const presenceData=presenceSnap.val()||{};
+    const count=Object.keys(presenceData).length;
+
+    document.getElementById('online-count-badge').textContent=count+'명';
+    document.getElementById('online-count-footer').textContent=count+'명 접속 중';
+
+    // 오늘 랭킹 데이터와 합쳐서 공부시간 표시
+    onValue(ref(db,`rank/${todayStr()}`),rankSnap=>{
+      const rankData=rankSnap.val()||{};
+      const now=Date.now();
+
+      const members=Object.values(presenceData).map(p=>{
+        const rk=rankData[p.nick];
+        const liveSec=(rk&&rk.live&&rk.liveTs&&(now-rk.liveTs)<5000)?rk.live:0;
+        const todaySec=(rk?rk.sec||0:0)+liveSec;
+        return{...p,todaySec,isStudying:p.studying||liveSec>0};
+      }).sort((a,b)=>{
+        // 공부중 먼저, 그 다음 공부시간 순
+        if(a.isStudying!==b.isStudying)return a.isStudying?-1:1;
+        return b.todaySec-a.todaySec;
+      });
+
+      const listEl=document.getElementById('online-members-list');
+      if(!members.length){listEl.innerHTML='<div class="online-empty">접속 중인 멤버가 없어요</div>';return;}
+
+      listEl.innerHTML=members.map(m=>{
+        const isMe=m.nick===NICK;
+        const avUrl=dicebearUrl(STYLES[m.style!=null?m.style:0]?.id||'adventurer',m.seed||'abc');
+        const statusText=m.isStudying?'📖 공부 중':'접속 중';
+        return`<div class="online-member-row">
+          <div class="online-member-av">
+            <img src="${avUrl}" alt="" loading="lazy">
+            <div class="online-av-dot ${m.isStudying?'studying':'idle'}"></div>
+          </div>
+          <div class="online-member-info">
+            <div class="online-member-name">
+              ${m.nick}${isMe?'<span class="me-tag">나</span>':''}
+            </div>
+            <div class="online-member-status ${m.isStudying?'studying':''}">${statusText}</div>
+          </div>
+          <div class="online-member-time">${m.todaySec?fmtMin(m.todaySec):''}</div>
+        </div>`;
+      }).join('');
+    },{onlyOnce:true});
   });
 }
 
@@ -634,34 +704,31 @@ window.addSubjectTimer=function(){
   if(!name)return;
   if(subjects.some(s=>s.name===name)){showToast('이미 있는 과목이에요');return;}
   subjects.push({id:'s'+Date.now(),name,elapsed:0,running:false,start:null,tick:null});
-  inp.value='';
-  lsSave();renderSubjectTimers();updateSaveBtn();
+  inp.value='';lsSave();renderSubjectTimers();updateSaveBtn();
 };
 
 function startSubject(id){
-  // 다른 과목이 실행 중이면 일시정지
   subjects.forEach(s=>{
     if(s.running&&s.id!==id){
       s.elapsed+=Math.floor((Date.now()-s.start)/1000);
-      s.running=false;s.start=null;
-      clearInterval(s.tick);s.tick=null;
+      s.running=false;s.start=null;clearInterval(s.tick);s.tick=null;
     }
   });
-  const s=subjects.find(s=>s.id===id);
-  if(!s)return;
+  const s=subjects.find(s=>s.id===id);if(!s)return;
   s.running=true;s.start=Date.now();
   s.tick=setInterval(()=>{renderSubjectTimers();updateTimerTotalVal();},1000);
   activeSubjId=id;
+  updatePresenceStudying(true);
   renderSubjectTimers();
 }
 
 function pauseSubject(id){
-  const s=subjects.find(s=>s.id===id);
-  if(!s||!s.running)return;
+  const s=subjects.find(s=>s.id===id);if(!s||!s.running)return;
   s.elapsed+=Math.floor((Date.now()-s.start)/1000);
-  s.running=false;s.start=null;
-  clearInterval(s.tick);s.tick=null;
+  s.running=false;s.start=null;clearInterval(s.tick);s.tick=null;
   if(activeSubjId===id)activeSubjId=null;
+  const anyRunning=subjects.some(s=>s.running);
+  if(!anyRunning)updatePresenceStudying(false);
   renderSubjectTimers();updateTimerTotalVal();
 }
 
@@ -670,39 +737,23 @@ function deleteSubject(id){
   if(s&&s.running){clearInterval(s.tick);}
   subjects=subjects.filter(s=>s.id!==id);
   if(activeSubjId===id)activeSubjId=null;
+  const anyRunning=subjects.some(s=>s.running);
+  if(!anyRunning)updatePresenceStudying(false);
   lsSave();renderSubjectTimers();updateTimerTotalVal();updateSaveBtn();
 }
 
-function getCurrentSec(s){
-  return s.elapsed+(s.running?Math.floor((Date.now()-s.start)/1000):0);
-}
-
-function getTotalSec(){
-  return subjects.reduce((a,s)=>a+getCurrentSec(s),0);
-}
-
-function updateTimerTotalVal(){
-  document.getElementById('timer-total-val').textContent=fmtMin(getTotalSec())||'0분';
-}
-
-function updateSaveBtn(){
-  const btn=document.getElementById('save-all-btn');
-  btn.disabled=subjects.length===0||getTotalSec()===0;
-}
+function getCurrentSec(s){return s.elapsed+(s.running?Math.floor((Date.now()-s.start)/1000):0);}
+function getTotalSec(){return subjects.reduce((a,s)=>a+getCurrentSec(s),0);}
+function updateTimerTotalVal(){document.getElementById('timer-total-val').textContent=fmtMin(getTotalSec())||'0분';}
+function updateSaveBtn(){const btn=document.getElementById('save-all-btn');btn.disabled=subjects.length===0||getTotalSec()===0;}
 
 function renderSubjectTimers(){
   const list=document.getElementById('subject-timers-list');
   const empty=document.getElementById('empty-subjects');
-  if(!subjects.length){
-    list.innerHTML='';
-    empty.style.display='block';
-    updateSaveBtn();
-    return;
-  }
+  if(!subjects.length){list.innerHTML='';empty.style.display='block';updateSaveBtn();return;}
   empty.style.display='none';
   list.innerHTML=subjects.map(s=>{
-    const sec=getCurrentSec(s);
-    const isActive=s.running;
+    const sec=getCurrentSec(s);const isActive=s.running;
     return`<div class="subj-timer-card ${isActive?'active-card':''}" data-id="${s.id}">
       <div class="subj-name-col">
         <div class="subj-title">${s.name}</div>
@@ -711,8 +762,7 @@ function renderSubjectTimers(){
       <div class="subj-timer-btns">
         ${isActive
           ?`<button class="subj-btn subj-btn-pause" data-action="pause" data-id="${s.id}">일시정지</button>`
-          :`<button class="subj-btn subj-btn-start" data-action="start" data-id="${s.id}">시작</button>`
-        }
+          :`<button class="subj-btn subj-btn-start" data-action="start" data-id="${s.id}">시작</button>`}
         <button class="subj-btn-del" data-action="del" data-id="${s.id}">✕</button>
       </div>
     </div>`;
@@ -729,35 +779,28 @@ function renderSubjectTimers(){
 }
 
 window.saveAllTimers=function(){
-  // 실행 중인 타이머 모두 일시정지
   subjects.forEach(s=>{if(s.running)pauseSubject(s.id);});
-  const today=todayStr();
-  let totalSec=0;
+  const today=todayStr();let totalSec=0;
   subjects.forEach(s=>{
-    if(s.elapsed>0){
-      push(ref(db,`logs/${today}/${NICK}`),{subject:s.name,sec:s.elapsed,ts:Date.now()});
-      totalSec+=s.elapsed;
-    }
+    if(s.elapsed>0){push(ref(db,`logs/${today}/${NICK}`),{subject:s.name,sec:s.elapsed,ts:Date.now()});totalSec+=s.elapsed;}
   });
   if(totalSec===0){showToast('공부한 시간이 없어요!');return;}
   onValue(ref(db,`rank/${today}/${NICK}`),snap=>{
     const prev=snap.val()||{sec:0};
     set(ref(db,`rank/${today}/${NICK}`),{nick:NICK,style:STYLE_IDX,seed:SEED,sec:(prev.sec||0)+totalSec,live:null,ts:Date.now()});
   },{onlyOnce:true});
-  // 저장 후 elapsed 리셋
   subjects.forEach(s=>{s.elapsed=0;});
   lsSave();renderSubjectTimers();updateTimerTotalVal();
+  updatePresenceStudying(false);
   showToast('기록 저장 완료! 🎉');
 };
 
-/* ── 실시간 공유 (live push) ── */
+/* ── 실시간 live push ── */
 function startLivePush(){
   if(liveInterval)clearInterval(liveInterval);
   liveInterval=setInterval(()=>{
-    const anyRunning=subjects.some(s=>s.running);
-    if(!anyRunning)return;
-    const totalLive=getTotalSec();
-    const today=todayStr();
+    if(!subjects.some(s=>s.running))return;
+    const totalLive=getTotalSec();const today=todayStr();
     onValue(ref(db,`rank/${today}/${NICK}`),snap=>{
       const prev=snap.val()||{sec:0,nick:NICK,style:STYLE_IDX,seed:SEED};
       set(ref(db,`rank/${today}/${NICK}`),{...prev,nick:NICK,style:STYLE_IDX,seed:SEED,live:totalLive,liveTs:Date.now()});
@@ -781,11 +824,11 @@ function renderCalendar(){
   let html=dows.map(d=>`<div class="cal-dow">${d}</div>`).join('');
   for(let i=0;i<firstDay;i++){html+=`<div class="cal-day other-month"><span class="cal-dn">${prevLastDate-firstDay+i+1}</span></div>`;}
   for(let d=1;d<=lastDate;d++){
-    const dateStr=`${calYear}-${String(calMonth+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
-    const isToday=dateStr===today,isSel=dateStr===selectedDate;
-    const tasks=(allTasks[dateStr]&&allTasks[dateStr][NICK])?Object.values(allTasks[dateStr][NICK]):[];
+    const ds=`${calYear}-${String(calMonth+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
+    const isToday=ds===today,isSel=ds===selectedDate;
+    const tasks=(allTasks[ds]&&allTasks[ds][NICK])?Object.values(allTasks[ds][NICK]):[];
     const dots=tasks.length?`<div class="cal-dot-wrap">${tasks.slice(0,3).map(()=>'<div class="cal-dot"></div>').join('')}</div>`:'';
-    html+=`<div class="cal-day ${isToday?'today':''} ${isSel?'selected':''}" data-date="${dateStr}"><span class="cal-dn">${d}</span>${dots}</div>`;
+    html+=`<div class="cal-day ${isToday?'today':''} ${isSel?'selected':''}" data-date="${ds}"><span class="cal-dn">${d}</span>${dots}</div>`;
   }
   const remain=(7-((firstDay+lastDate)%7))%7;
   for(let i=1;i<=remain;i++){html+=`<div class="cal-day other-month"><span class="cal-dn">${i}</span></div>`;}
@@ -815,41 +858,31 @@ function renderDayTasks(){
   document.getElementById('task-list').querySelectorAll('.task-del').forEach(el=>{el.addEventListener('click',()=>delTask(el.dataset.id));});
 }
 
-function listenTasks(){
-  onValue(ref(db,'tasks'),snap=>{allTasks=snap.val()||{};renderCalendar();renderDayTasks();});
-}
+function listenTasks(){onValue(ref(db,'tasks'),snap=>{allTasks=snap.val()||{};renderCalendar();renderDayTasks();});}
 window.addTask=function(){
   const v=document.getElementById('task-input').value.trim();if(!v)return;
   const id='t'+Date.now();
   set(ref(db,`tasks/${selectedDate}/${NICK}/${id}`),{id,text:v,done:false});
   document.getElementById('task-input').value='';
 };
-function toggleTask(id){
-  const tasks=allTasks[selectedDate]&&allTasks[selectedDate][NICK];
-  if(tasks&&tasks[id])update(ref(db,`tasks/${selectedDate}/${NICK}/${id}`),{done:!tasks[id].done});
-}
+function toggleTask(id){const t=allTasks[selectedDate]&&allTasks[selectedDate][NICK];if(t&&t[id])update(ref(db,`tasks/${selectedDate}/${NICK}/${id}`),{done:!t[id].done});}
 function delTask(id){remove(ref(db,`tasks/${selectedDate}/${NICK}/${id}`));}
 
 /* ── 어제 올림픽 단상 ── */
 function listenYesterdayPodium(){
-  const yday=yesterdayStr();
-  onValue(ref(db,`rank/${yday}`),snap=>{
+  onValue(ref(db,`rank/${yesterdayStr()}`),snap=>{
     const data=snap.val()||{};
     const sorted=Object.values(data).sort((a,b)=>(b.sec||0)-(a.sec||0)).slice(0,3);
     const section=document.getElementById('podium-section');
     if(!sorted.length){section.style.display='none';return;}
     section.style.display='block';
     const avUrl=d=>dicebearUrl(STYLES[d.style!=null?d.style:0]?.id||'adventurer',d.seed||'abc');
-    const crowns=['👑','🥈','🥉'];
-    // order: 2nd(left) 1st(center) 3rd(right)
-    const order=[1,0,2];
-    const pClasses=['p2','p1','p3'];
+    const order=[1,0,2];const pClasses=['p2','p1','p3'];
     document.getElementById('podium-avatars').innerHTML=order.map((rank,i)=>{
-      const d=sorted[rank];
-      if(!d)return`<div class="podium-item ${pClasses[i]}"></div>`;
+      const d=sorted[rank];if(!d)return`<div class="podium-item ${pClasses[i]}"></div>`;
       return`<div class="podium-item ${pClasses[i]}">
         <div class="podium-av-wrap">
-          ${rank===0?`<div class="podium-crown">👑</div>`:''}
+          ${rank===0?'<div class="podium-crown">👑</div>':''}
           <div class="podium-av"><img src="${avUrl(d)}" alt="" loading="lazy"></div>
         </div>
         <div class="podium-name">${d.nick}</div>
@@ -862,8 +895,7 @@ function listenYesterdayPodium(){
 /* ── 오늘 실시간 랭킹 ── */
 function listenRank(){
   onValue(ref(db,`rank/${todayStr()}`),snap=>{
-    const data=snap.val()||{};
-    const now=Date.now();
+    const data=snap.val()||{};const now=Date.now();
     const sorted=Object.values(data).map(d=>{
       const liveSec=(d.live&&d.liveTs&&(now-d.liveTs)<5000)?d.live:0;
       return{...d,totalDisplay:(d.sec||0)+liveSec,isLive:liveSec>0};
@@ -871,14 +903,12 @@ function listenRank(){
     const maxSec=sorted[0]?sorted[0].totalDisplay:1;
     const medals=['🥇','🥈','🥉'];
     const avUrl=d=>dicebearUrl(STYLES[d.style!=null?d.style:0]?.id||'adventurer',d.seed||'abc');
-
     const top3El=document.getElementById('rank-top3');
     if(sorted.length>=3){
       top3El.style.display='grid';
       const order=[1,0,2];
       top3El.innerHTML=order.map(i=>{
-        const d=sorted[i];if(!d)return'<div></div>';
-        const isMe=d.nick===NICK;
+        const d=sorted[i];if(!d)return'<div></div>';const isMe=d.nick===NICK;
         return`<div class="rank-top-card ${i===0?'first':''}">
           <div class="rank-medal">${medals[i]}</div>
           <div class="rank-top-av"><img src="${avUrl(d)}" alt="" loading="lazy"></div>
@@ -888,12 +918,10 @@ function listenRank(){
         </div>`;
       }).join('');
     } else {top3El.style.display='none';}
-
     const listEl=document.getElementById('rank-list-wrap');
     if(!sorted.length){listEl.innerHTML='<div class="rank-empty">아직 기록한 사람이 없어요<br>타이머로 공부를 시작해 보세요 📚</div>';return;}
     listEl.innerHTML=sorted.map((d,i)=>{
-      const isMe=d.nick===NICK;
-      const pct=Math.round((d.totalDisplay/maxSec)*100);
+      const isMe=d.nick===NICK;const pct=Math.round((d.totalDisplay/maxSec)*100);
       return`<div class="rank-row ${isMe?'me':''}">
         <span class="rank-pos">${i+1}</span>
         <div class="rank-av">
@@ -918,13 +946,9 @@ function listenRank(){
 function renderStat(){
   const today=todayStr();
   onValue(ref(db,'rank'),snap=>{
-    const all=snap.val()||{};
-    let totalSec=0,studyDays=0,daySecMap={};
-    Object.entries(all).forEach(([date,dayData])=>{
-      if(dayData[NICK]){const s=dayData[NICK].sec||0;totalSec+=s;studyDays++;daySecMap[date]=s;}
-    });
-    const todaySec=daySecMap[today]||0;
-    const avgSec=studyDays?Math.floor(totalSec/studyDays):0;
+    const all=snap.val()||{};let totalSec=0,studyDays=0,daySecMap={};
+    Object.entries(all).forEach(([date,dayData])=>{if(dayData[NICK]){const s=dayData[NICK].sec||0;totalSec+=s;studyDays++;daySecMap[date]=s;}});
+    const todaySec=daySecMap[today]||0;const avgSec=studyDays?Math.floor(totalSec/studyDays):0;
     document.getElementById('stat-grid').innerHTML=`
       <div class="stat-card accent-card"><div class="stat-val">${fmtMin(todaySec)||'0분'}</div><div class="stat-lbl">오늘 공부시간</div></div>
       <div class="stat-card"><div class="stat-val">${fmtMin(totalSec)||'0분'}</div><div class="stat-lbl">총 공부시간</div></div>
@@ -940,16 +964,11 @@ function renderStat(){
     }).join('');
   },{onlyOnce:true});
   onValue(ref(db,'logs'),snap=>{
-    const all=snap.val()||{};
-    const subjects={};
-    Object.values(all).forEach(dayData=>{
-      const myLogs=dayData[NICK];
-      if(myLogs)Object.values(myLogs).forEach(l=>{subjects[l.subject]=(subjects[l.subject]||0)+l.sec;});
-    });
+    const all=snap.val()||{};const subjects={};
+    Object.values(all).forEach(dayData=>{const myLogs=dayData[NICK];if(myLogs)Object.values(myLogs).forEach(l=>{subjects[l.subject]=(subjects[l.subject]||0)+l.sec;});});
     const arr=Object.entries(subjects).sort((a,b)=>b[1]-a[1]).slice(0,5);
     if(arr.length){
-      document.getElementById('subj-section').style.display='block';
-      const mx=arr[0][1];
+      document.getElementById('subj-section').style.display='block';const mx=arr[0][1];
       document.getElementById('subj-chart').innerHTML=arr.map(([sub,sec])=>{
         const pct=Math.round((sec/mx)*100);
         return`<div class="subj-row"><span class="subj-name">${sub}</span><div class="subj-track"><div class="subj-fill" style="width:${pct}%"></div></div><span class="subj-time">${fmtMin(sec)}</span></div>`;
