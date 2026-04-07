@@ -1,69 +1,459 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hwrang Application</title>
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>화랑 스터디</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0e0e10;
+  --bg2: #16161a;
+  --bg3: #1e1e24;
+  --border: rgba(255,255,255,0.08);
+  --border2: rgba(255,255,255,0.14);
+  --text: #f0eeea;
+  --text2: #8a8895;
+  --text3: #4e4d58;
+  --accent: #c8f060;
+  --accent2: #a4d43c;
+  --accent-dim: rgba(200,240,96,0.12);
+  --red: #ff6b6b;
+  --blue: #60a0f0;
+  --amber: #f0c060;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;background:var(--bg);color:var(--text);font-family:'Noto Sans KR',sans-serif;-webkit-font-smoothing:antialiased}
+
+/* ── LAYOUT ── */
+.shell{max-width:440px;margin:0 auto;min-height:100vh;display:flex;flex-direction:column;padding:0 0 80px}
+.top-bar{padding:24px 20px 0;display:flex;justify-content:space-between;align-items:center}
+.logo{font-size:17px;font-weight:700;letter-spacing:-0.3px;color:var(--text)}
+.logo span{color:var(--accent)}
+.nick-chip{font-size:12px;padding:5px 12px;border-radius:20px;border:0.5px solid var(--border2);color:var(--text2);cursor:pointer;transition:all .2s}
+.nick-chip:hover{border-color:var(--accent);color:var(--accent)}
+
+/* ── NICK SCREEN ── */
+.nick-screen{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:20px;padding:40px 20px}
+.nick-screen .hero{font-size:32px;font-weight:700;letter-spacing:-1px;line-height:1.2;text-align:center}
+.nick-screen .hero span{color:var(--accent)}
+.nick-screen .sub{font-size:14px;color:var(--text2);text-align:center;line-height:1.7}
+.nick-input-wrap{width:100%;max-width:300px;position:relative}
+.nick-input-wrap input{width:100%;background:var(--bg3);border:0.5px solid var(--border2);border-radius:12px;padding:14px 50px 14px 18px;font-size:16px;color:var(--text);font-family:'Noto Sans KR',sans-serif;outline:none;transition:border .2s}
+.nick-input-wrap input:focus{border-color:var(--accent)}
+.nick-input-wrap input::placeholder{color:var(--text3)}
+.go-btn{position:absolute;right:10px;top:50%;transform:translateY(-50%);background:var(--accent);border:none;border-radius:8px;width:34px;height:34px;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .15s}
+.go-btn:hover{background:var(--accent2)}
+.go-btn svg{width:16px;height:16px}
+
+/* ── NAV ── */
+.nav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:440px;background:var(--bg2);border-top:0.5px solid var(--border);display:flex;padding:8px 0 max(8px,env(safe-area-inset-bottom))}
+.nav-btn{flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;background:none;border:none;cursor:pointer;padding:6px 0;transition:all .15s}
+.nav-btn .nav-icon{font-size:20px;transition:transform .15s}
+.nav-btn .nav-label{font-size:10px;color:var(--text3);font-family:'Noto Sans KR',sans-serif;transition:color .15s}
+.nav-btn.active .nav-label{color:var(--accent)}
+.nav-btn.active .nav-icon{transform:scale(1.15)}
+
+/* ── PAGES ── */
+.page{display:none;padding:20px 20px 0;animation:fadeUp .25s ease}
+.page.active{display:block}
+@keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+.page-title{font-size:22px;font-weight:700;letter-spacing:-0.5px;margin-bottom:20px}
+
+/* ── TIMER ── */
+.timer-card{background:var(--bg2);border-radius:20px;border:0.5px solid var(--border);padding:28px 24px;margin-bottom:16px;text-align:center}
+.timer-subject{width:100%;background:transparent;border:none;border-bottom:0.5px solid var(--border2);padding:0 0 10px;font-size:15px;color:var(--text);font-family:'Noto Sans KR',sans-serif;outline:none;text-align:center;margin-bottom:24px;transition:border .2s}
+.timer-subject:focus{border-bottom-color:var(--accent)}
+.timer-subject::placeholder{color:var(--text3)}
+.timer-num{font-family:'DM Mono',monospace;font-size:52px;font-weight:500;color:var(--text);letter-spacing:2px;line-height:1;margin-bottom:24px}
+.timer-num.running{color:var(--accent)}
+.timer-btns{display:flex;gap:10px;justify-content:center}
+.btn-main{padding:12px 28px;border-radius:12px;border:none;font-size:15px;font-family:'Noto Sans KR',sans-serif;font-weight:500;cursor:pointer;transition:all .15s}
+.btn-start{background:var(--accent);color:#111}
+.btn-start:hover{background:var(--accent2)}
+.btn-save{background:var(--bg3);color:var(--text2);border:0.5px solid var(--border2)}
+.btn-save:hover{border-color:var(--border2);color:var(--text)}
+
+.log-section{background:var(--bg2);border-radius:16px;border:0.5px solid var(--border);padding:18px}
+.log-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px}
+.log-header h3{font-size:13px;font-weight:500;color:var(--text2)}
+.log-total{font-size:13px;font-weight:500;color:var(--accent);font-family:'DM Mono',monospace}
+.log-item{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:0.5px solid var(--border)}
+.log-item:last-child{border-bottom:none}
+.log-sub{font-size:14px;color:var(--text)}
+.log-t{font-size:13px;color:var(--text2);font-family:'DM Mono',monospace}
+.empty-msg{font-size:13px;color:var(--text3);padding:12px 0;text-align:center}
+
+/* ── PLANNER ── */
+.planner-date{font-size:12px;color:var(--text3);margin-bottom:16px;letter-spacing:0.5px}
+.add-wrap{display:flex;gap:8px;margin-bottom:16px}
+.add-wrap input{flex:1;background:var(--bg2);border:0.5px solid var(--border);border-radius:12px;padding:12px 16px;font-size:14px;color:var(--text);font-family:'Noto Sans KR',sans-serif;outline:none;transition:border .2s}
+.add-wrap input:focus{border-color:var(--accent)}
+.add-wrap input::placeholder{color:var(--text3)}
+.add-wrap button{background:var(--accent);border:none;border-radius:12px;padding:0 18px;font-size:20px;color:#111;cursor:pointer;transition:all .15s;font-weight:300}
+.add-wrap button:hover{background:var(--accent2)}
+.tasks{background:var(--bg2);border-radius:16px;border:0.5px solid var(--border);overflow:hidden}
+.task-item{display:flex;align-items:center;gap:12px;padding:14px 16px;border-bottom:0.5px solid var(--border);transition:background .15s}
+.task-item:last-child{border-bottom:none}
+.task-item:hover{background:var(--bg3)}
+.task-cb{width:20px;height:20px;border-radius:6px;border:1.5px solid var(--border2);background:transparent;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .15s}
+.task-cb.checked{background:var(--accent);border-color:var(--accent)}
+.task-cb.checked::after{content:'✓';font-size:12px;color:#111;font-weight:700}
+.task-text{flex:1;font-size:14px;color:var(--text);transition:color .15s}
+.task-text.done{text-decoration:line-through;color:var(--text3)}
+.task-del{background:none;border:none;cursor:pointer;font-size:18px;color:var(--text3);padding:0 4px;line-height:1;transition:color .15s}
+.task-del:hover{color:var(--red)}
+.progress-wrap{margin-bottom:16px}
+.progress-bar-bg{height:4px;background:var(--bg3);border-radius:4px;overflow:hidden}
+.progress-bar-fill{height:4px;background:var(--accent);border-radius:4px;transition:width .4s ease}
+.progress-label{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;font-size:12px;color:var(--text3)}
+
+/* ── RANK ── */
+.rank-top3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:16px}
+.rank-top-card{background:var(--bg2);border:0.5px solid var(--border);border-radius:16px;padding:16px 10px;text-align:center;position:relative}
+.rank-top-card.first{border-color:rgba(200,240,96,0.3);background:rgba(200,240,96,0.05)}
+.rank-medal{font-size:20px;margin-bottom:8px}
+.rank-top-avatar{width:40px;height:40px;border-radius:50%;margin:0 auto 8px;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:700;background:var(--bg3)}
+.rank-top-name{font-size:12px;font-weight:500;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.rank-top-time{font-size:11px;color:var(--text2);font-family:'DM Mono',monospace;margin-top:3px}
+.rank-list{background:var(--bg2);border-radius:16px;border:0.5px solid var(--border);overflow:hidden}
+.rank-row{display:flex;align-items:center;gap:12px;padding:12px 16px;border-bottom:0.5px solid var(--border)}
+.rank-row:last-child{border-bottom:none}
+.rank-pos{width:20px;font-size:13px;font-weight:500;color:var(--text3);text-align:center}
+.rank-avatar-sm{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;background:var(--bg3);flex-shrink:0}
+.rank-info-col{flex:1}
+.rank-name-row{display:flex;align-items:center;gap:6px}
+.rank-nm{font-size:14px;color:var(--text)}
+.me-tag{font-size:10px;padding:2px 7px;border-radius:10px;background:var(--accent-dim);color:var(--accent)}
+.rank-bar-bg{height:3px;background:var(--bg3);border-radius:3px;margin-top:5px}
+.rank-bar-fg{height:3px;border-radius:3px;background:var(--border2);transition:width .4s}
+.rank-row.me .rank-bar-fg{background:var(--accent)}
+.rank-hr-time{font-size:12px;color:var(--text2);font-family:'DM Mono',monospace;white-space:nowrap}
+.rank-empty{padding:32px 16px;text-align:center;font-size:13px;color:var(--text3)}
+.rank-refresh{font-size:12px;color:var(--text3);text-align:center;margin-top:10px;padding-bottom:4px}
+
+/* ── STAT ── */
+.stat-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px}
+.stat-card{background:var(--bg2);border:0.5px solid var(--border);border-radius:16px;padding:18px}
+.stat-val{font-size:24px;font-weight:700;color:var(--text);font-family:'DM Mono',monospace;letter-spacing:-0.5px}
+.stat-lbl{font-size:12px;color:var(--text3);margin-top:4px}
+.stat-card.accent-card{border-color:rgba(200,240,96,0.25);background:rgba(200,240,96,0.05)}
+.stat-card.accent-card .stat-val{color:var(--accent)}
+.week-section{background:var(--bg2);border:0.5px solid var(--border);border-radius:16px;padding:18px}
+.week-title{font-size:13px;font-weight:500;color:var(--text2);margin-bottom:16px}
+.bar-row{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+.bar-row:last-child{margin-bottom:0}
+.bar-day{font-size:12px;color:var(--text3);width:20px;text-align:center}
+.bar-track{flex:1;height:8px;background:var(--bg3);border-radius:8px;overflow:hidden}
+.bar-fill{height:8px;border-radius:8px;background:var(--border2);transition:width .6s ease}
+.bar-fill.today-bar{background:var(--accent)}
+.bar-val{font-size:11px;color:var(--text3);font-family:'DM Mono',monospace;min-width:36px;text-align:right}
+.subject-section{background:var(--bg2);border:0.5px solid var(--border);border-radius:16px;padding:18px;margin-top:10px}
+.subj-row{display:flex;align-items:center;gap:10px;margin-bottom:8px}
+.subj-row:last-child{margin-bottom:0}
+.subj-name{font-size:13px;color:var(--text);min-width:60px}
+.subj-track{flex:1;height:6px;background:var(--bg3);border-radius:6px;overflow:hidden}
+.subj-fill{height:6px;border-radius:6px;background:var(--blue)}
+.subj-time{font-size:11px;color:var(--text3);font-family:'DM Mono',monospace;min-width:36px;text-align:right}
+</style>
 </head>
-<body class="bg-gray-100">
-    <div class="container mx-auto p-5">
-        <h1 class="text-3xl font-bold mb-5">Hwrang Application</h1>
-        
-        <!-- Character Selection -->
-        <section id="character-selection" class="mb-8">
-            <h2 class="text-2xl mb-3">Character Selection</h2>
-            <!-- Add character selection inputs here -->
-        </section>
+<body>
+<div class="shell">
+  <div class="top-bar">
+    <div class="logo">화랑<span>.</span>study</div>
+    <div class="nick-chip" id="nick-chip" onclick="resetNick()" style="display:none"></div>
+  </div>
 
-        <!-- Study Timer -->
-        <section id="study-timer" class="mb-8">
-            <h2 class="text-2xl mb-3">Study Timer</h2>
-            <!-- Add study timer implementation here -->
-        </section>
-
-        <!-- Calendar -->
-        <section id="calendar" class="mb-8">
-            <h2 class="text-2xl mb-3">Calendar</h2>
-            <!-- Add calendar here -->
-        </section>
-
-        <!-- Statistics -->
-        <section id="statistics" class="mb-8">
-            <h2 class="text-2xl mb-3">Statistics</h2>
-            <canvas id="myChart"></canvas>
-            <script>
-                // Sample data for Chart.js
-                const ctx = document.getElementById('myChart').getContext('2d');
-                const myChart = new Chart(ctx, {
-                    type: 'bar',
-                    data: {
-                        labels: ['January', 'February', 'March'],
-                        datasets: [{
-                            label: '# of Studies',
-                            data: [12, 19, 3],
-                            backgroundColor: 'rgba(255, 99, 132, 0.2)',
-                            borderColor: 'rgba(255, 99, 132, 1)',
-                            borderWidth: 1
-                        }]
-                    },
-                    options: {
-                        scales: {
-                            y: {
-                                beginAtZero: true
-                            }
-                        }
-                    }
-                });
-            </script>
-        </section>
-
-        <!-- Community Square -->
-        <section id="community-square" class="mb-8">
-            <h2 class="text-2xl mb-3">Community Square</h2>
-            <!-- Add community interactions here -->
-        </section>
+  <!-- NICK SCREEN -->
+  <div id="nick-screen" class="nick-screen">
+    <div class="hero">시험기간,<br>같이 <span>달리자</span></div>
+    <div class="sub">닉네임을 입력하고<br>화랑 스터디를 시작하세요</div>
+    <div class="nick-input-wrap">
+      <input type="text" id="nick-input" placeholder="닉네임 입력 (최대 10자)" maxlength="10" onkeydown="if(event.key==='Enter')startApp()">
+      <button class="go-btn" onclick="startApp()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#111" stroke-width="2.5" stroke-linecap="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </button>
     </div>
+  </div>
+
+  <!-- MAIN PAGES -->
+  <div id="main-app" style="display:none">
+
+    <div id="page-timer" class="page active">
+      <div class="page-title">타이머</div>
+      <div class="timer-card">
+        <input class="timer-subject" id="subject-input" type="text" placeholder="과목을 입력하세요 (예: 화학, 수학)" maxlength="20">
+        <div class="timer-num" id="timer-display">00:00:00</div>
+        <div class="timer-btns">
+          <button class="btn-main btn-start" id="btn-start" onclick="timerToggle()">시작</button>
+          <button class="btn-main btn-save" id="btn-save" onclick="timerStop()">기록 저장</button>
+        </div>
+      </div>
+      <div class="log-section">
+        <div class="log-header">
+          <h3>오늘의 기록</h3>
+          <span class="log-total" id="log-total">0분</span>
+        </div>
+        <div id="log-list"><div class="empty-msg">아직 기록이 없어요</div></div>
+      </div>
+    </div>
+
+    <div id="page-planner" class="page">
+      <div class="page-title">플래너</div>
+      <div class="planner-date" id="planner-date"></div>
+      <div class="progress-wrap">
+        <div class="progress-label">
+          <span id="prog-label">할 일 0 / 0</span>
+          <span id="prog-pct">0%</span>
+        </div>
+        <div class="progress-bar-bg"><div class="progress-bar-fill" id="prog-fill" style="width:0%"></div></div>
+      </div>
+      <div class="add-wrap">
+        <input type="text" id="task-input" placeholder="오늘 할 일을 입력하세요" maxlength="40" onkeydown="if(event.key==='Enter')addTask()">
+        <button onclick="addTask()">+</button>
+      </div>
+      <div class="tasks" id="task-list"><div class="empty-msg" style="padding:24px">할 일을 추가해 보세요</div></div>
+    </div>
+
+    <div id="page-rank" class="page">
+      <div class="page-title">오늘 랭킹</div>
+      <div id="rank-top3" class="rank-top3"></div>
+      <div id="rank-list" class="rank-list"></div>
+      <div class="rank-refresh">기록 저장 후 반영돼요</div>
+    </div>
+
+    <div id="page-stat" class="page">
+      <div class="page-title">내 통계</div>
+      <div class="stat-grid" id="stat-grid"></div>
+      <div class="week-section">
+        <div class="week-title">최근 7일</div>
+        <div id="week-chart"></div>
+      </div>
+      <div class="subject-section" id="subj-section" style="display:none">
+        <div class="week-title">과목별 공부시간</div>
+        <div id="subj-chart"></div>
+      </div>
+    </div>
+
+  </div><!-- end main-app -->
+</div><!-- end shell -->
+
+<!-- NAV -->
+<nav class="nav" id="main-nav" style="display:none">
+  <button class="nav-btn active" onclick="switchPage('timer',this)">
+    <span class="nav-icon">⏱</span><span class="nav-label">타이머</span>
+  </button>
+  <button class="nav-btn" onclick="switchPage('planner',this)">
+    <span class="nav-icon">📋</span><span class="nav-label">플래너</span>
+  </button>
+  <button class="nav-btn" onclick="switchPage('rank',this)">
+    <span class="nav-icon">🏆</span><span class="nav-label">랭킹</span>
+  </button>
+  <button class="nav-btn" onclick="switchPage('stat',this)">
+    <span class="nav-icon">📊</span><span class="nav-label">통계</span>
+  </button>
+</nav>
+
+<script>
+const SK = 'hwarang_v2';
+let st = {nick:'', timer:{running:false, start:null, elapsed:0}, logs:[], tasks:[], history:[]};
+let timerTick = null;
+
+function save(){try{localStorage.setItem(SK, JSON.stringify(st))}catch(e){}}
+function load(){try{const d=localStorage.getItem(SK);if(d)st=JSON.parse(d)}catch(e){}}
+function todayStr(){return new Date().toISOString().slice(0,10)}
+function fmtSec(s){const h=Math.floor(s/3600),m=Math.floor((s%3600)/60),sec=s%60;return[h,m,sec].map(x=>String(x).padStart(2,'0')).join(':')}
+function fmtMin(s){if(!s||s<60)return s+'초';const h=Math.floor(s/3600),m=Math.floor((s%3600)/60);return h>0?h+'시간 '+m+'분':m+'분'}
+function initials(n){return n.charAt(0).toUpperCase()}
+const avatarColors = ['#c8f060','#60a0f0','#f0c060','#ff6b6b','#a0c8f0','#f060a0','#60f0a0'];
+function avatarColor(nick){let h=0;for(let i=0;i<nick.length;i++)h=nick.charCodeAt(i)+((h<<5)-h);return avatarColors[Math.abs(h)%avatarColors.length]}
+
+load();
+if(st.nick) showMain();
+
+function startApp(){
+  const n = document.getElementById('nick-input').value.trim();
+  if(!n) return;
+  st.nick = n; save(); showMain();
+}
+function showMain(){
+  document.getElementById('nick-screen').style.display='none';
+  document.getElementById('main-app').style.display='block';
+  document.getElementById('main-nav').style.display='flex';
+  const chip = document.getElementById('nick-chip');
+  chip.textContent = st.nick; chip.style.display='block';
+  renderAll();
+}
+function resetNick(){
+  if(!confirm('닉네임을 변경하시겠어요?')) return;
+  if(st.timer.running){clearInterval(timerTick);st.timer={running:false,start:null,elapsed:0};}
+  st.nick='';
+  document.getElementById('main-app').style.display='none';
+  document.getElementById('main-nav').style.display='none';
+  document.getElementById('nick-chip').style.display='none';
+  document.getElementById('nick-screen').style.display='flex';
+}
+
+function switchPage(id, btn){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('page-'+id).classList.add('active');
+  btn.classList.add('active');
+  if(id==='rank') renderRank();
+  if(id==='stat') renderStat();
+}
+
+/* ── TIMER ── */
+function timerToggle(){
+  if(!st.timer.running){
+    st.timer.running=true; st.timer.start=Date.now();
+    document.getElementById('btn-start').textContent='일시정지';
+    document.getElementById('timer-display').classList.add('running');
+    timerTick=setInterval(()=>{
+      const cur=st.timer.elapsed+Math.floor((Date.now()-st.timer.start)/1000);
+      document.getElementById('timer-display').textContent=fmtSec(cur);
+    },1000);
+  } else {
+    st.timer.elapsed+=Math.floor((Date.now()-st.timer.start)/1000);
+    st.timer.running=false; st.timer.start=null;
+    document.getElementById('btn-start').textContent='계속';
+    document.getElementById('timer-display').classList.remove('running');
+    clearInterval(timerTick);
+  }
+}
+function timerStop(){
+  const sub=document.getElementById('subject-input').value.trim()||'기타';
+  let sec=st.timer.elapsed;
+  if(st.timer.running){sec+=Math.floor((Date.now()-st.timer.start)/1000);clearInterval(timerTick);document.getElementById('timer-display').classList.remove('running');}
+  if(sec<5){alert('5초 이상 공부해야 기록돼요!');return;}
+  const today=todayStr();
+  st.logs.push({date:today,subject:sub,sec,nick:st.nick});
+  const hIdx=st.history.findIndex(h=>h.date===today&&h.nick===st.nick);
+  if(hIdx>=0)st.history[hIdx].sec+=sec;
+  else st.history.push({date:today,nick:st.nick,sec});
+  st.timer={running:false,start:null,elapsed:0};
+  document.getElementById('timer-display').textContent='00:00:00';
+  document.getElementById('btn-start').textContent='시작';
+  document.getElementById('subject-input').value='';
+  save(); renderLogs();
+}
+function renderLogs(){
+  const today=todayStr();
+  const tLogs=st.logs.filter(l=>l.date===today&&l.nick===st.nick);
+  const list=document.getElementById('log-list');
+  list.innerHTML=tLogs.length?tLogs.slice().reverse().map(l=>`<div class="log-item"><span class="log-sub">${l.subject}</span><span class="log-t">${fmtMin(l.sec)}</span></div>`).join(''):'<div class="empty-msg">아직 기록이 없어요</div>';
+  const total=tLogs.reduce((a,l)=>a+l.sec,0);
+  document.getElementById('log-total').textContent=fmtMin(total)||'0분';
+}
+
+/* ── PLANNER ── */
+function addTask(){
+  const v=document.getElementById('task-input').value.trim();if(!v)return;
+  st.tasks.push({id:Date.now(),text:v,done:false,date:todayStr(),nick:st.nick});
+  document.getElementById('task-input').value='';
+  save(); renderTasks();
+}
+function toggleTask(id){const t=st.tasks.find(t=>t.id===id);if(t){t.done=!t.done;save();renderTasks();}}
+function delTask(id){st.tasks=st.tasks.filter(t=>t.id!==id);save();renderTasks();}
+function renderTasks(){
+  const today=todayStr();
+  const d=new Date();
+  const days=['일','월','화','수','목','금','토'];
+  document.getElementById('planner-date').textContent=`${d.getFullYear()}년 ${d.getMonth()+1}월 ${d.getDate()}일 (${days[d.getDay()]})`;
+  const tasks=st.tasks.filter(t=>t.date===today&&t.nick===st.nick);
+  const done=tasks.filter(t=>t.done).length;
+  const pct=tasks.length?Math.round((done/tasks.length)*100):0;
+  document.getElementById('prog-label').textContent=`할 일 ${done} / ${tasks.length}`;
+  document.getElementById('prog-pct').textContent=pct+'%';
+  document.getElementById('prog-fill').style.width=pct+'%';
+  document.getElementById('task-list').innerHTML=tasks.length?tasks.map(t=>`<div class="task-item"><div class="task-cb ${t.done?'checked':''}" onclick="toggleTask(${t.id})"></div><span class="task-text ${t.done?'done':''}">${t.text}</span><button class="task-del" onclick="delTask(${t.id})">×</button></div>`).join(''):'<div class="empty-msg" style="padding:24px">할 일을 추가해 보세요</div>';
+}
+
+/* ── RANK ── */
+function renderRank(){
+  const today=todayStr();
+  const byNick={};
+  st.history.filter(h=>h.date===today).forEach(h=>{byNick[h.nick]=(byNick[h.nick]||0)+h.sec});
+  const sorted=Object.entries(byNick).sort((a,b)=>b[1]-a[1]);
+  const maxSec=sorted[0]?sorted[0][1]:1;
+  const medals=['🥇','🥈','🥉'];
+
+  // top 3
+  const top3El=document.getElementById('rank-top3');
+  const order=[1,0,2]; // 2nd, 1st, 3rd visual order
+  if(sorted.length>=3){
+    top3El.style.display='grid';
+    top3El.innerHTML=order.map(i=>{
+      const [nick,sec]=sorted[i]||['',0];
+      if(!nick)return'<div></div>';
+      const isMe=nick===st.nick;
+      const c=avatarColor(nick);
+      return`<div class="rank-top-card ${i===0?'first':''}">
+        <div class="rank-medal">${medals[i]||''}</div>
+        <div class="rank-top-avatar" style="background:${c}22;color:${c}">${initials(nick)}</div>
+        <div class="rank-top-name">${nick}${isMe?' ★':''}</div>
+        <div class="rank-top-time">${fmtMin(sec)}</div>
+      </div>`;
+    }).join('');
+  } else {
+    top3El.style.display='none';
+  }
+
+  // full list
+  const listEl=document.getElementById('rank-list');
+  if(!sorted.length){listEl.innerHTML='<div class="rank-empty">오늘 기록한 사람이 없어요<br>타이머로 공부를 시작해 보세요</div>';return;}
+  listEl.innerHTML=sorted.map(([nick,sec],i)=>{
+    const isMe=nick===st.nick;
+    const pct=Math.round((sec/maxSec)*100);
+    const c=avatarColor(nick);
+    return`<div class="rank-row ${isMe?'me':''}">
+      <span class="rank-pos">${i+1}</span>
+      <div class="rank-avatar-sm" style="background:${c}22;color:${c}">${initials(nick)}</div>
+      <div class="rank-info-col">
+        <div class="rank-name-row"><span class="rank-nm">${nick}</span>${isMe?'<span class="me-tag">나</span>':''}</div>
+        <div class="rank-bar-bg"><div class="rank-bar-fg" style="width:${pct}%"></div></div>
+      </div>
+      <span class="rank-hr-time">${fmtMin(sec)}</span>
+    </div>`;
+  }).join('');
+}
+
+/* ── STAT ── */
+function renderStat(){
+  const today=todayStr();
+  const myLogs=st.logs.filter(l=>l.nick===st.nick);
+  const todayLogs=myLogs.filter(l=>l.date===today);
+  const todaySec=todayLogs.reduce((a,l)=>a+l.sec,0);
+  const totalSec=myLogs.reduce((a,l)=>a+l.sec,0);
+  const days=[...new Set(myLogs.map(l=>l.date))].length;
+  const avgSec=days?Math.floor(totalSec/days):0;
+
+  document.getElementById('stat-grid').innerHTML=`
+    <div class="stat-card accent-card"><div class="stat-val">${fmtMin(todaySec)||'0분'}</div><div class="stat-lbl">오늘 공부시간</div></div>
+    <div class="stat-card"><div class="stat-val">${fmtMin(totalSec)||'0분'}</div><div class="stat-lbl">총 공부시간</div></div>
+    <div class="stat-card"><div class="stat-val">${days}일</div><div class="stat-lbl">공부한 날</div></div>
+    <div class="stat-card"><div class="stat-val">${fmtMin(avgSec)||'0분'}</div><div class="stat-lbl">일평균 공부시간</div></div>`;
+
+  // 7days
+  const dayNames=['일','월','화','수','목','금','토'];
+  const last7=[];for(let i=6;i>=0;i--){const d=new Date();d.setDate(d.getDate()-i);last7.push(d.toISOString().slice(0,10));}
+  const barData=last7.map(d=>{const sec=myLogs.filter(l=>l.date===d).reduce((a,l)=>a+l.sec,0);return{day:dayNames[new Date(d).getDay()],sec,isToday:d===today}});
+  const mx=Math.max(...barData.map(b=>b.sec),1);
+  document.getElementById('week-chart').innerHTML=barData.map(b=>{const pct=Math.round((b.sec/mx)*100);return`<div class="bar-row"><span class="bar-day">${b.day}</span><div class="bar-track"><div class="bar-fill ${b.isToday?'today-bar':''}" style="width:${pct}%"></div></div><span class="bar-val">${b.sec?fmtMin(b.sec):'—'}</span></div>`;}).join('');
+
+  // subjects
+  const subjects={};myLogs.forEach(l=>{subjects[l.subject]=(subjects[l.subject]||0)+l.sec});
+  const subjArr=Object.entries(subjects).sort((a,b)=>b[1]-a[1]).slice(0,5);
+  if(subjArr.length){
+    document.getElementById('subj-section').style.display='block';
+    const smx=subjArr[0][1];
+    document.getElementById('subj-chart').innerHTML=subjArr.map(([sub,sec])=>{const pct=Math.round((sec/smx)*100);return`<div class="subj-row"><span class="subj-name">${sub}</span><div class="subj-track"><div class="subj-fill" style="width:${pct}%"></div></div><span class="subj-time">${fmtMin(sec)}</span></div>`;}).join('');
+  } else {
+    document.getElementById('subj-section').style.display='none';
+  }
+}
+
+function renderAll(){renderLogs();renderTasks();}
+</script>
 </body>
 </html>
